@@ -7,8 +7,9 @@
     <title>Рубероид в Одессе</title>
 </head>
 <body>
-<h1> Почем в Одессе рубероид?</h1>
-<form method="post" action="index.php"><br><br>
+<h3 align ="center"> Почем в Одессе рубероид?</h3>
+
+<form align ="center" method="post" action="index.php"><br><br>
     Введите зарплату рабочего:<br>
     <input name="zpraba" type="text" maxlength="10" size="5" value="" /> UAH
     <br><br>
@@ -30,8 +31,9 @@
 
 <?php
 
-$date = date('Ymd') - 1;
-$json = file_get_contents('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?date='.$date.'&json');
+date_default_timezone_set('Greenwich');
+$date = strtotime('-1 day');
+$json = file_get_contents('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?date=' . date('Ymd', $date) . '&json');
 $courses = json_decode($json, true);
 $eur = 0;
 $usd = 0;
@@ -54,14 +56,14 @@ $pesok = $_POST['pesok'];
 
 $beznacenki = $cenaraba + $pplenka + $bitum + $kkarton + $pesok;
 
-$result = ($beznacenki) + ($beznacenki * 0.2);
-
-echo round($result, 2) . ' грн.';
-
-
+$result = $beznacenki + ($beznacenki * 0.2);
 ?>
 
-
+<h4 align ="center">
+    Стоимость рубероида:
+    <? echo round($result, 2) . ' грн.'; ?>
+</h4>
+?>
 
 </body>
 </html>
